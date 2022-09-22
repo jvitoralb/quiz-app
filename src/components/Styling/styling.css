@@ -52,6 +52,16 @@ body {
     margin-right: 25px;
 }
 
+.q-wrong {
+    font-weight: 400;
+    color: rgb(255, 94, 94);
+}
+
+.q-right  {
+    font-weight: 400;
+    color: rgb(18, 153, 79);
+}
+
 .stats {
     text-align: right;
 }
@@ -89,6 +99,7 @@ body {
 }
 
 .selected-wrong {
+    /* Not being used for now */
     font-weight: 400;
     color: rgb(255, 94, 94);
     border-color: rgb(255, 94, 94);

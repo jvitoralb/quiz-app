@@ -1,37 +1,36 @@
 import React from 'react';
 
 
-const Options = (props) => {
-    const { obj, select, finish } = props;
+const Options = ({ obj, select, finish }) => {
 
-    const getClassName = (aswr) => {
+    const getClass = (aswr) => {
         let { selected, correct_answer } = obj;
 
-        if (!finish) {
-            return obj.selected.includes(aswr) ? 'selected' : '';
-        }
-
         if (selected.includes(aswr)) {
-            return selected[1] ? 'selected-right' : 'selected-wrong';
+            return 'selected';
         }
 
-        return correct_answer === aswr ? 'selected-right' : undefined;
+        if (finish) {
+            return correct_answer === aswr ? 'selected-right' : '';
+        }
+
+        return '';
     }
 
     return (
-        <React.Fragment>
+        <ul className='list-options'>
             {
                 obj.answers.map((aswr, aIdx) => (
                     <li
                         key={aIdx}
-                        onClick={() => select(aswr, obj.id)}
-                        className={`default-items ${getClassName(aswr)}`}
+                        onClick={() => !finish && select(aswr, obj.id)}
+                        className={`default-items ${getClass(aswr)}`}
                     >
                         {decodeURIComponent(aswr)}
                     </li>
                 ))
             }
-        </React.Fragment>
+        </ul>
     );
 }
 

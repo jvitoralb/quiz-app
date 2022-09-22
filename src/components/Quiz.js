@@ -1,5 +1,6 @@
 import React from 'react';
 import Options from './Options';
+import Questions from './Questions';
 import './Styling/styling.css';
 
 
@@ -31,7 +32,7 @@ const Quiz = ({ status }) => {
         if (!game.results.length) {
         /**
          * Unecessary if statement && also bugs play again feature - dev 
-         */
+        **/
             fetch('https://opentdb.com/api.php?amount=5&encode=url3986')
             .then(res => res.json())
             .then(data => questState(data.results))
@@ -54,12 +55,10 @@ const Quiz = ({ status }) => {
         }));
     }
 
-    const showAnswers = () => {
-        setGame(prevGame => ({
-            ...prevGame,
-            finish: true
-        }));
-    }
+    const showAnswers = () => setGame(prevGame => ({
+        ...prevGame,
+        finish: true
+    }));
 
     const resetGame = () => {
         setGame(initialState);
@@ -78,17 +77,16 @@ const Quiz = ({ status }) => {
                     {
                         game.results.map((obj, idx) => (
                             <React.Fragment key={idx}>
-                                <div className='question-stats'>
-                                    <p className='question'>{idx + 1}. {decodeURIComponent(obj.question)}</p>
-                                    <p className='stats'>{decodeURIComponent(obj.category)}</p>
-                                </div>
-                                <ul className='list-options'>
-                                    <Options
-                                        obj={obj}
-                                        select={selectAnswer}
-                                        finish={game.finish}
-                                    />
-                                </ul>
+                                <Questions
+                                    obj={obj}
+                                    idx={idx}
+                                    finish={game.finish}
+                                />
+                                <Options
+                                    obj={obj}
+                                    select={selectAnswer}
+                                    finish={game.finish}
+                                />
                             </React.Fragment>
                         ))
                     }
