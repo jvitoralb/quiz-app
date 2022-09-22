@@ -10,16 +10,33 @@ const App = () => {
     const start = () => setGameStatus(!gameStatus);
 
     // const devHomePage = (
-    //     <React.Fragment>
+    //     <div className='home'>
     //         <p>Let's Play a really cool Trivia Quiz</p>
     //         <form>
-    //             {/* 
-    //                 set up a input to select category and difficulty
-    //                 and also how many questions, max 10 default 5
-    //             */}
+    //             <label>
+    //                 Pick a Category
+    //                 <select value={categories.category} onChange={selectCategory}>
+    //                     <option value={'Any'}>Any category</option>
+    //                     {/* Call API to get them all */}
+    //                 </select>
+    //             </label>
+    //             <label>
+    //                 Number of Questions
+    //                 <select value={categories.number} onChange={selectNumber}>
+    //                     <option value={5}>5</option>
+    //                     <option value={10}>10</option>
+    //                 </select>
+    //             </label>
+    //             <label>
+    //                 Difficulty
+    //                 <select value={categories.number} onChange={selectNumber}>
+    //                     <option value={5}>5</option>
+    //                     <option value={10}>10</option>
+    //                 </select>
+    //             </label>
     //         </form>
     //         <button onClick={start}>Start Playing</button>
-    //     </React.Fragment>
+    //     </div>
     // );
 
     const HomePage = (
