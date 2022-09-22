@@ -1,4 +1,5 @@
 import React from 'react';
+import Options from './Options';
 import './Styling/styling.css';
 
 
@@ -65,15 +66,11 @@ const Quiz = ({ status }) => {
         startPlaying();
     }
 
-    const getClassName = (aswr, index) => {
-        let { selected, correct_answer } = game.results[index];
-
-        if (selected.includes(aswr)) {
-            return selected[1] ? 'selected-right' : 'selected-wrong';
-        }
-        return correct_answer === aswr ? 'selected-right' : undefined;
+    const showResetButton = {
+        true: (click) => click ? resetGame : 'Play Again',
+        false: (click) => click ? showAnswers : 'Show Answers'
     }
-console.log(game)
+// console.log(game)
     return (
         <React.Fragment>
             {status &&
@@ -86,36 +83,20 @@ console.log(game)
                                     <p className='stats'>{decodeURIComponent(obj.category)}</p>
                                 </div>
                                 <ul className='list-options'>
-                                    {
-                                        obj.answers.map((aswr, aIdx) => 
-                                        !game.finish ? (
-                                            <li
-                                                key={aIdx}
-                                                onClick={() => selectAnswer(aswr, obj.id)}
-                                                className={
-                                                    `default-items ${obj.selected.includes(aswr) ? 'selected' : ''}`
-                                                }
-                                            >
-                                                {decodeURIComponent(aswr)}
-                                            </li>
-                                        ) : (
-                                            <li
-                                                key={aIdx}
-                                                className={`default-items ${getClassName(aswr, idx)}`}
-                                            >
-                                                {decodeURIComponent(aswr)}
-                                            </li>
-                                        ))
-                                    }
+                                    <Options
+                                        obj={obj}
+                                        select={selectAnswer}
+                                        finish={game.finish}
+                                    />
                                 </ul>
                             </React.Fragment>
                         ))
                     }
-                    <button 
-                        onClick={game.finish ? resetGame : showAnswers}
+                    <button
+                        onClick={showResetButton[game.finish](true)}
                         className='show-reset-btn'
                     >
-                        {game.finish ? 'Play Again' : 'Show Answers'}
+                        {showResetButton[game.finish]()}
                     </button>
 
                     {/* Dev */}
