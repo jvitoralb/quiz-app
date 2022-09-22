@@ -27,8 +27,8 @@ const App = () => {
             {
                 !gameStatus &&
                 <div className='home'>
-                    {/* <h1>Quiz</h1> */}
-                    <p>Let's Play a really cool Trivia Quiz!</p>
+                    {/* Both Quizz and homepage have div with class='home' */}
+                    <p className='home-text'>Let's Play a really cool Trivia Quiz!</p>
                     <button 
                         onClick={start}
                         className='start-btn'

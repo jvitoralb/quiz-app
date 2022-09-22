@@ -94,7 +94,7 @@ const Quiz = ({ status }) => {
                         onClick={showResetButton[game.finish](true)}
                         className='show-reset-btn'
                     >
-                        {showResetButton[game.finish]()}
+                        {showResetButton[game.finish](false)}
                     </button>
 
                     {/* Dev */}
