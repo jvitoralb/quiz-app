@@ -56,6 +56,9 @@ const Quiz = ({ status }) => {
     }
 
     const showAnswers = () => setGame(prevGame => ({
+        /**
+         *  Set a warning for questions not answered before setting finish true
+        **/
         ...prevGame,
         finish: true
     }));
@@ -69,7 +72,7 @@ const Quiz = ({ status }) => {
         true: (click) => click ? resetGame : 'Play Again',
         false: (click) => click ? showAnswers : 'Show Answers'
     }
-// console.log(game)
+console.log(game)
     return (
         <React.Fragment>
             {status &&

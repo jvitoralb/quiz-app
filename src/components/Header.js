@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => (
     <header id='header' className='page-header'>
-        <h1>Quiz</h1>
+        <p>Trivia Quiz</p>
     </header>
 );
 
