@@ -15,8 +15,9 @@ const Quiz = ({ status }) => {
         force: false
     }
     /**
-     * also try to think in a better way to structure this questions state
-     * or just think in a better structure for the resQuestions[]
+     * also try to to structure questions state better
+     * Perhaps add a EndGame component
+     * with the right and wrong questions + difficulty + category
     **/
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
@@ -50,7 +51,7 @@ const Quiz = ({ status }) => {
                 finish: false
             }));
         }
-        // if (config.finish) {
+        if (config.finish) {
             /*
             * When finish dev clear this if statement
             */
@@ -58,7 +59,7 @@ const Quiz = ({ status }) => {
             .then(res => res.json())
             .then(data => questState(data.results))
                 .catch(err => console.log(err));
-        // }
+        }
     }, [config.finish]);
 
     const { questionToRender, questionIndex, questionRef } = (() => {
@@ -87,7 +88,7 @@ const Quiz = ({ status }) => {
 
     const selectAnswer = (item, questionID) => setGame(prevGame => ({
         /**
-         * Try to think in a way of unselecting a option
+         * Think about unselecting a option
          * when a selected option is clicked
         **/
             ...prevGame,
@@ -171,7 +172,6 @@ const Quiz = ({ status }) => {
                     <Score
                         toRender={questionToRender}
                         resQuestions={game.resQuestions}
-                        finish={config.finish}
                     />
                     <Questions
                         toRender={questionToRender}
@@ -181,8 +181,8 @@ const Quiz = ({ status }) => {
                     <Options
                         toRender={questionToRender}
                         toRenderRef={questionRef}
+                        forceAnswer={config.force}
                         select={selectAnswer}
-                        askToForce={config.force}
                     />
                     {
                         config.force
@@ -209,7 +209,7 @@ const Quiz = ({ status }) => {
                         </button>
                     }
 
-                    {/* Dev */}
+                    {/* Dev 
                     <button onClick={
                         () => setGame(prevGame => ({
                             ...prevGame,

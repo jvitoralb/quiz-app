@@ -61,7 +61,9 @@ const App = () => {
         <React.Fragment>
             <Header />
             <main id='main' className='page-main'>
-                <Quiz status={gameStatus} />
+                <Quiz
+                    status={gameStatus}
+                />
                 {HomePage}
             </main>
         </React.Fragment>
