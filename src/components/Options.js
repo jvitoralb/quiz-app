@@ -1,29 +1,30 @@
 import React from 'react';
 
 
-const Options = ({ obj, select, finish }) => {
+const Options = ({ toRender, toRenderRef, select, askToForce }) => {
 
     const getClass = (aswr) => {
-        let { selected, correct_answer } = obj;
 
-        if (selected.includes(aswr)) {
+        if (toRenderRef.selected.includes(aswr)) {
             return 'selected';
         }
 
-        if (finish) {
-            return correct_answer === aswr ? 'selected-right' : '';
+        if (toRenderRef.resolve === 'resolve') {
+            return toRender.correct_answer === aswr ? 'selected-right' : '';
         }
 
         return '';
     }
 
+    const canSelect = (toRenderRef.resolve === 'initial' && !askToForce);
+
     return (
         <ul className='list-options'>
             {
-                obj.answers.map((aswr, aIdx) => (
+                toRender.answers.map((aswr, aIdx) => (
                     <li
                         key={aIdx}
-                        onClick={() => !finish && select(aswr, obj.id)}
+                        onClick={() => (canSelect && select(aswr, toRender.id))}
                         className={`default-items ${getClass(aswr)}`}
                     >
                         {decodeURIComponent(aswr)}

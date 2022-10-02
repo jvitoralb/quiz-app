@@ -1,30 +1,28 @@
 import React from 'react';
 
 
-const Questions = ({ obj, idx, finish}) => {
+const Questions = ({ toRender, toRenderIndex, toRenderRef }) => {
 
     const getClass = () => {
-        const { selected } = obj;
 
-        if (!finish || !selected.length) {
-            return ''
+        if (toRenderRef.resolve === 'resolve') {
+            return toRenderRef.selected[1] ? 'q-right' : 'q-wrong';
         }
 
-        return selected[1] ? 'q-right' : 'q-wrong';
+        return '';
     }
 
-    const editCategory = (category) => category.replace('Entertainment: ', '');
+    const decodedQuestion = decodeURIComponent(toRender.question);
 
     return (
-        <div className='question-stats'>
-            <p className={`question ${getClass()}`}>
-                {/* it might be a good idea to add titles */}
-                {idx + 1}. {decodeURIComponent(obj.question)}
+        <React.Fragment>
+            <p
+                title={decodedQuestion}
+                className={`question ${getClass()}`}
+            >
+                {toRenderIndex + 1}. {decodedQuestion}
             </p>
-            <p className='stats'>
-                {editCategory(decodeURIComponent(obj.category))}
-            </p>
-        </div>
+        </React.Fragment>
     );
 }
 
