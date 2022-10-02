@@ -38,7 +38,7 @@ body {
     text-align: center;
     padding: 16px;
     margin: 16px;
-    max-width: 860px;
+    max-width: 720px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255);
     border: 1px solid rgb(158, 158, 158);
@@ -62,7 +62,8 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
 
-.question-stats {
+.score {
+    font-size: 22px;
     padding: 8px;
     display: flex;
     justify-content: space-between;
@@ -71,8 +72,7 @@ body {
 .question {
     font-weight: 400;
     text-align: left;
-    max-width: 70%;
-    margin-right: 25px;
+    padding: 8px;
 }
 
 .q-wrong {
@@ -81,10 +81,6 @@ body {
 
 .q-right  {
     color: rgb(18, 153, 79);
-}
-
-.stats {
-    text-align: right;
 }
 
 .list-options {
@@ -119,13 +115,6 @@ body {
     background-color: rgba(0, 194, 87, 0.1);
 }
 
-/* .selected-wrong {
-    /* Not being used for now
-    font-weight: 400;
-    color: rgb(255, 94, 94);
-    border-color: rgb(255, 94, 94);
-} */
-
 .show-reset-btn {
     color: rgb(87, 87, 87);
     margin: 5px;
@@ -139,4 +128,10 @@ body {
     font-weight: 400;
     border-color: rgb(107, 107, 107);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35);
+}
+
+.select-warning {
+    color: red;
+    font-weight: 400;
+    padding: 8px;
 }
