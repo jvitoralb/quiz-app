@@ -41,19 +41,13 @@ const App = () => {
 
     const HomePage = (
         <React.Fragment>
-            {
-                !gameStatus &&
-                <div className='home'>
-                    {/* Both Quizz and homepage have div with class='home' */}
-                    <p className='home-text'>Let's Play a really cool Trivia Quiz!</p>
-                    <button
-                        onClick={start}
-                        className='start-btn'
-                    >
-                        Start Playing
-                    </button>
-                </div>
-            }
+            <p className='home-text'>Let's Play a really cool Trivia Quiz!</p>
+            <button
+                onClick={start}
+                className='start-btn'
+            >
+                Start Playing
+            </button>
         </React.Fragment>
     );
 
@@ -61,10 +55,12 @@ const App = () => {
         <React.Fragment>
             <Header />
             <main id='main' className='page-main'>
-                <Quiz
-                    status={gameStatus}
-                />
-                {HomePage}
+                <div className='home'>
+                    {!gameStatus && HomePage}
+                    <Quiz
+                        status={gameStatus}
+                    />
+                </div>
             </main>
         </React.Fragment>
     );
