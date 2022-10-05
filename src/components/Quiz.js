@@ -11,7 +11,7 @@ const Quiz = ({ status }) => {
         resQuestions: []
     }
     const initialConfig = {
-        finish: false,
+        finish: 'start',
         force: false
     }
     /**
@@ -51,14 +51,19 @@ const Quiz = ({ status }) => {
                 finish: false
             }));
         }
-        if (config.finish) {
-            /*
-            * When finish dev clear this if statement
-            */
-            fetch('https://opentdb.com/api.php?amount=5&encode=url3986')
-            .then(res => res.json())
-            .then(data => questState(data.results))
-                .catch(err => console.log(err));
+
+        const getData = async () => {
+            try {
+                const response = await fetch('https://opentdb.com/api.php?amount=5&encode=url3986');
+                const data = await response.json();
+                questState(data.results);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        if (config.finish === 'start' || config.finish === 'play again') {
+            getData();
         }
     }, [config.finish]);
 
@@ -143,7 +148,7 @@ const Quiz = ({ status }) => {
 
     const finishGame = () => setConfig(prevGame => ({
             ...prevGame,
-            finish: true
+            finish: 'play again'
         })
     );
 
@@ -162,7 +167,6 @@ const Quiz = ({ status }) => {
             return 'Show Answer';
         }
     }
-
 // console.log(game)
 // console.log(config)
     return (
@@ -172,6 +176,7 @@ const Quiz = ({ status }) => {
                     <Score
                         toRender={questionToRender}
                         resQuestions={game.resQuestions}
+                        finish={config.finish}
                     />
                     <Questions
                         toRender={questionToRender}
@@ -209,7 +214,7 @@ const Quiz = ({ status }) => {
                         </button>
                     }
 
-                    {/* Dev 
+                    {/* Dev */}
                     <button onClick={
                         () => setGame(prevGame => ({
                             ...prevGame,
