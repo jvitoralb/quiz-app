@@ -2,6 +2,13 @@ import React, { useReducer } from 'react';
 
 
 const Score = ({ toRender, resQuestions, finish }) => {
+    const initialState = {
+        totalQuestions: resQuestions.length,
+        rightCount: 0
+    }
+
+    const reset = () => initialState;
+
     const reducer = (state, action) => {
         switch(action.type) {
             case 'increment':
@@ -14,17 +21,14 @@ const Score = ({ toRender, resQuestions, finish }) => {
                     ...state,
                     totalQuestions: resQuestions.length + resQuestions.length
                 }
+            case 'reset':
+                return reset(action.payload);
             default:
-                throw new Error('something went wrong switch');
+                throw new Error(`Switch Error Action: ${action.type}`);
         }
     }
 
-    const initialState = {
-        totalQuestions: resQuestions.length,
-        rightCount: 0
-    }
-
-    const [score, dispatch] = useReducer(reducer, initialState);
+    const [score, dispatch] = useReducer(reducer, initialState, reset);
 
     React.useEffect(() => {
         if (finish === 'play again') {
@@ -61,7 +65,8 @@ const Score = ({ toRender, resQuestions, finish }) => {
 
             {/* Dev 
             <button onClick={
-                () => setScore(initialState)}
+                () => dispatch({type: 'reset', payload: initialState})
+            }
             >
                 dev
             </button>
