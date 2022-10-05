@@ -34,11 +34,13 @@ const Buttons = ({ force, toRenderRef, resQuestions, util }) => {
                 <div className='select-warning'>
                     <p>You haven't selected any answer</p>
                     <button
+                        className='warning-btn'
                         onClick={() => forceAnswer(true)}
                     >
-                        Show Anyways
+                        Show Anyway
                     </button>
                     <button
+                        className='warning-btn'
                         onClick={() => forceAnswer(false)}
                     >
                         Cancel

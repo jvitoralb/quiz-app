@@ -40,10 +40,10 @@ const Quiz = ({ status }) => {
                 return {
                     allQuestions: questionsArr,
                     resQuestions: questionsArr.map(obj => ({
-                        ref: obj.id,
-                        resolve: 'initial',
-                        selected: []
-                    })
+                            ref: obj.id,
+                            resolve: 'initial',
+                            selected: []
+                        })
                     )
                 }
             });
@@ -64,13 +64,13 @@ const Quiz = ({ status }) => {
             }
         }
 
-        if (config.finish === 'start' || config.finish === 'play again') {
+        if (['start', 'play again'].includes(config.finish)) {
             getData();
         }
     }, [config.finish]);
 
     const { questionToRender, questionIndex, questionRef } = (() => {
-        let refObj = game.resQuestions.find(obj => (obj.resolve === 'initial' || obj.resolve === 'resolve'));
+        let refObj = game.resQuestions.find(obj => ['initial', 'resolve'].includes(obj.resolve));
         let [question] = game.allQuestions.filter(obj => obj.id === refObj.ref);
         let index = game.allQuestions.findIndex(obj => obj === question);
 
@@ -131,7 +131,7 @@ const Quiz = ({ status }) => {
                 resQuestions: prevGame.resQuestions.map(obj =>
                     obj === questionRef ? ({
                         ...obj,
-                        selected: [`force-${getID()}`, false],
+                        selected: [`force-${obj.ref}`, false],
                         resolve: 'resolve'
                     }) : obj
                 )
@@ -177,7 +177,7 @@ console.log(game)
                         util={{forceAnswer, showAnswer, finishGame, updateRender}}
                     />
 
-                    {/* Dev 
+                    {/* Dev
                     <button onClick={
                         () => setGame(prevGame => ({
                             ...prevGame,

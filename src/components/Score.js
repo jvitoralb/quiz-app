@@ -63,7 +63,7 @@ const Score = ({ toRender, resQuestions, finish }) => {
                 <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
             </div>
 
-            {/* Dev 
+            {/* Dev
             <button onClick={
                 () => dispatch({type: 'reset', payload: initialState})
             }
