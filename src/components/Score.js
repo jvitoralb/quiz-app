@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 
 
 const Score = ({ toRender, resQuestions, finish }) => {
@@ -24,11 +24,11 @@ const Score = ({ toRender, resQuestions, finish }) => {
             case 'reset':
                 return reset(action.payload);
             default:
-                throw new Error(`Switch Error Action: ${action.type}`);
+                throw new Error(`Switch Error Action`);
         }
     }
 
-    const [score, dispatch] = useReducer(reducer, initialState, reset);
+    const [score, dispatch] = React.useReducer(reducer, initialState, reset);
 
     React.useEffect(() => {
         if (finish === 'play again') {

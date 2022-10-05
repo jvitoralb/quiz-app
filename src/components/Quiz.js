@@ -1,6 +1,7 @@
 import React from 'react';
 import Options from './Options';
 import Questions from './Questions';
+import Buttons from './Buttons';
 import Score from './Score';
 import './Styling/styling.css';
 
@@ -15,8 +16,8 @@ const Quiz = ({ status }) => {
         force: false
     }
     /**
-     * also try to to structure questions state better
-     * Perhaps add a EndGame component
+     * try to better structure questions state
+     * Create EndGame to appear as the Show Answer in the last question is clicked
      * with the right and wrong questions + difficulty + category
     **/
     const [config, setConfig] = React.useState(initialConfig);
@@ -39,25 +40,26 @@ const Quiz = ({ status }) => {
                 return {
                     allQuestions: questionsArr,
                     resQuestions: questionsArr.map(obj => ({
-                            ref: obj.id,
-                            resolve: 'initial',
-                            selected: []
-                        })
+                        ref: obj.id,
+                        resolve: 'initial',
+                        selected: []
+                    })
                     )
                 }
             });
             setConfig(prevConfig => ({
                 ...prevConfig,
-                finish: false
+                finish: false // not sure if I should keep this as a boolean
             }));
         }
 
         const getData = async () => {
             try {
+                console.log('API Call fired')
                 const response = await fetch('https://opentdb.com/api.php?amount=5&encode=url3986');
                 const data = await response.json();
                 questState(data.results);
-            } catch (err) {
+            } catch(err) {
                 console.log(err);
             }
         }
@@ -126,24 +128,23 @@ const Quiz = ({ status }) => {
         }));
     }
 
-    const resetForce = () => setConfig(prevGame => ({
+    const forceAnswer = (positive) => {
+        if (positive) {
+            setGame(prevGame => ({
+                ...prevGame,
+                resQuestions: prevGame.resQuestions.map(obj => 
+                    obj === questionRef ? ({
+                        ...obj,
+                        selected: [`force-${getID()}`, false],
+                        resolve: 'resolve'
+                    }) : obj
+                )
+            }));
+        }
+        setConfig(prevGame => ({
             ...prevGame,
             force: false
-        })
-    );
-
-    const forceAnswer = () => {
-        setGame(prevGame => ({
-            ...prevGame,
-            resQuestions: prevGame.resQuestions.map(obj => 
-                obj === questionRef ? ({
-                    ...obj,
-                    selected: [`force-${getID()}`, false],
-                    resolve: 'resolve'
-                }) : obj
-            )
         }));
-        resetForce()
     }
 
     const finishGame = () => setConfig(prevGame => ({
@@ -151,28 +152,12 @@ const Quiz = ({ status }) => {
             finish: 'play again'
         })
     );
-
-    const buttonDisplay = {
-        resolve: (clickFunc) => {
-            let lastIndex = game.resQuestions.length - 1 === questionIndex;
-            if (clickFunc) {
-                return lastIndex ? finishGame : updateRender;
-            }
-            return lastIndex ? 'Keep Playing' : 'Next Question';
-        },
-        initial: (clickFunc) => {
-            if (clickFunc) {
-                return showAnswer;
-            }
-            return 'Show Answer';
-        }
-    }
 // console.log(game)
 // console.log(config)
     return (
         <React.Fragment>
             {status &&
-                <div className='home'>
+                <React.Fragment>
                     <Score
                         toRender={questionToRender}
                         resQuestions={game.resQuestions}
@@ -189,32 +174,14 @@ const Quiz = ({ status }) => {
                         forceAnswer={config.force}
                         select={selectAnswer}
                     />
-                    {
-                        config.force
-                        ?
-                        <div className='select-warning'>
-                            <p>You haven't selected any answer</p>
-                            <button
-                                onClick={forceAnswer}
-                            >
-                                Show Anyways
-                            </button>
-                            <button
-                                onClick={resetForce}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                        :
-                        <button
-                            className='show-reset-btn'
-                            onClick={buttonDisplay[questionRef.resolve](true)}
-                            >
-                            {buttonDisplay[questionRef.resolve](false)}
-                        </button>
-                    }
+                    <Buttons
+                        force={config.force}
+                        toRenderRef={questionRef}
+                        resQuestions={game.resQuestions}
+                        util={{forceAnswer, showAnswer, finishGame, updateRender}}
+                    />
 
-                    {/* Dev */}
+                    {/* Dev 
                     <button onClick={
                         () => setGame(prevGame => ({
                             ...prevGame,
@@ -228,7 +195,7 @@ const Quiz = ({ status }) => {
                         dev
                     </button>
                     {/* Dev */}
-                </div>
+                </React.Fragment>
             }
         </React.Fragment>
     );
