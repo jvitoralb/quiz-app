@@ -94,15 +94,11 @@ const Quiz = ({ status }) => {
     const correct = (answer) => answer === questionToRender.correct_answer;
 
     const selectAnswer = (item, questionID) => setGame(prevGame => ({
-        /**
-         * Think about unselecting a option
-         * when a selected option is clicked
-        **/
             ...prevGame,
             resQuestions: prevGame.resQuestions.map(selectObj =>
                 selectObj.ref === questionID ? ({
                     ...selectObj,
-                    selected: [item, correct(item, questionID)]
+                    selected: (selectObj.selected.includes(item) ? [] : [item, correct(item, questionID)])
                 }) : selectObj
             )
         })
@@ -132,7 +128,7 @@ const Quiz = ({ status }) => {
         if (positive) {
             setGame(prevGame => ({
                 ...prevGame,
-                resQuestions: prevGame.resQuestions.map(obj => 
+                resQuestions: prevGame.resQuestions.map(obj =>
                     obj === questionRef ? ({
                         ...obj,
                         selected: [`force-${getID()}`, false],
@@ -152,7 +148,7 @@ const Quiz = ({ status }) => {
             finish: 'play again'
         })
     );
-// console.log(game)
+console.log(game)
 // console.log(config)
     return (
         <React.Fragment>
