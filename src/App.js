@@ -46,7 +46,7 @@ const App = () => {
                 <div className='home'>
                     {/* Both Quizz and homepage have div with class='home' */}
                     <p className='home-text'>Let's Play a really cool Trivia Quiz!</p>
-                    <button 
+                    <button
                         onClick={start}
                         className='start-btn'
                     >
