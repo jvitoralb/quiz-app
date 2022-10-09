@@ -138,3 +138,39 @@ body {
     margin: 8px;
     padding: 8px 12px;
 }
+
+.end-game {
+    font-weight: 400;
+    text-align: start;
+    padding: 3px 36px;
+    width: 480px;
+}
+
+.end-quest {
+    cursor: pointer;
+    padding: 6px;
+}
+
+.end-quest:hover {
+    border-radius: 5px;
+    transform: scale(1.025);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+}
+
+.quest-default {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.quest-selected {
+    white-space: unset;
+}
+
+.end-list {
+    list-style: none;
+}
+
+.end-list > li {
+    padding: 1.5px 6px;
+}
