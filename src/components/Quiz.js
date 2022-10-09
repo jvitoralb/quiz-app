@@ -3,22 +3,23 @@ import Options from './Options';
 import Questions from './Questions';
 import Buttons from './Buttons';
 import Score from './Score';
+import EndGame from './EndGame';
 import './Styling/styling.css';
 
 
-const Quiz = ({ status }) => {
+const Quiz = ({ status, restartStatus }) => {
     const initialGame = {
         allQuestions: [],
         resQuestions: []
     }
     const initialConfig = {
         finish: 'start',
-        force: false
+        forceAswr: false
     }
     /**
+     * API is called twice of rsome weird reason
      * try to better structure questions state
-     * Create EndGame to appear as the Show Answer in the last question is clicked
-     * with the right and wrong questions + difficulty + category
+     * need to separate CSS files its quite messy
     **/
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
@@ -49,7 +50,7 @@ const Quiz = ({ status }) => {
             });
             setConfig(prevConfig => ({
                 ...prevConfig,
-                finish: false // not sure if I should keep this as a boolean
+                finish: 'playing'
             }));
         }
 
@@ -69,8 +70,20 @@ const Quiz = ({ status }) => {
         }
     }, [config.finish]);
 
+    React.useEffect(() => {
+        if (game.resQuestions.every(obj => obj.resolve === 'done')) {
+            setConfig(prevConfig => ({
+                ...prevConfig,
+                finish: 'end game'
+            }));
+        }
+    }, [game.resQuestions]);
+
     const { questionToRender, questionIndex, questionRef } = (() => {
-        let refObj = game.resQuestions.find(obj => ['initial', 'resolve'].includes(obj.resolve));
+        let refObj = game.resQuestions.find((obj, idx, arr) => {
+            if (idx === arr.length - 1) return arr.at(-1); // stop at -1 so EndGame is rendered
+            return ['initial', 'resolve'].includes(obj.resolve);
+        });
         let [question] = game.allQuestions.filter(obj => obj.id === refObj.ref);
         let index = game.allQuestions.findIndex(obj => obj === question);
 
@@ -109,7 +122,7 @@ const Quiz = ({ status }) => {
         if (!questionRef.selected.length) {
             return setConfig(prevConfig => ({
                 ...prevConfig,
-                force: true
+                forceAswr: true
             }));
         }
 
@@ -139,7 +152,7 @@ const Quiz = ({ status }) => {
         }
         setConfig(prevGame => ({
             ...prevGame,
-            force: false
+            forceAswr: false
         }));
     }
 
@@ -148,17 +161,30 @@ const Quiz = ({ status }) => {
             finish: 'play again'
         })
     );
+
+    const quitGame = () => {
+        setGame(initialGame);
+        setConfig(initialConfig);
+        restartStatus();
+    }
 console.log(game)
 // console.log(config)
     return (
-        <React.Fragment>
-            {status &&
+        status && <React.Fragment>
+            <Score
+                toRender={questionToRender}
+                toRenderRef={questionRef}
+                resQuestions={game.resQuestions}
+                finish={config.finish}
+            />
+            {
+                config.finish === 'end game'
+                ?
+                <EndGame
+                    {...game}
+                />
+                :
                 <React.Fragment>
-                    <Score
-                        toRender={questionToRender}
-                        resQuestions={game.resQuestions}
-                        finish={config.finish}
-                    />
                     <Questions
                         toRender={questionToRender}
                         toRenderIndex={questionIndex}
@@ -167,32 +193,32 @@ console.log(game)
                     <Options
                         toRender={questionToRender}
                         toRenderRef={questionRef}
-                        forceAnswer={config.force}
+                        forceAnswer={config.forceAswr}
                         select={selectAnswer}
                     />
-                    <Buttons
-                        force={config.force}
-                        toRenderRef={questionRef}
-                        resQuestions={game.resQuestions}
-                        util={{forceAnswer, showAnswer, finishGame, updateRender}}
-                    />
-
-                    {/* Dev
-                    <button onClick={
-                        () => setGame(prevGame => ({
-                            ...prevGame,
-                            finish: false,
-                            resQuestions: prevGame.resQuestions.map(
-                                ({ ref }) => ({ref, resolve: 'initial', selected: []})
-                            )
-                        }))}
-                        style={{padding: `${10}px`}}
-                    >
-                        dev
-                    </button>
-                    {/* Dev */}
                 </React.Fragment>
             }
+            <Buttons
+                toRenderRef={questionRef}
+                forceAswr={config.forceAswr}
+                resQuestions={game.resQuestions}
+                util={{forceAnswer, showAnswer, finishGame, updateRender, quitGame}}
+            />
+
+            {/* Dev 
+            <button onClick={
+                () => setGame(prevGame => ({
+                    ...prevGame,
+                    finish: false,
+                    resQuestions: prevGame.resQuestions.map(
+                        ({ ref }) => ({ref, resolve: 'initial', selected: []})
+                    )
+                }))}
+                style={{padding: `${10}px`}}
+            >
+                dev
+            </button>
+            {/* Dev */}
         </React.Fragment>
     );
 }
