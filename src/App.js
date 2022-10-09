@@ -1,7 +1,7 @@
 import React from 'react';
 import Quiz from './components/Quiz';
 import Header from './components/Header';
-import './components/Styling/styling.css';
+import './components/Styling/index.css';
 
 
 const App = () => {
