@@ -59,6 +59,7 @@ const App = () => {
                     {!gameStatus && HomePage}
                     <Quiz
                         status={gameStatus}
+                        restartStatus={start}
                     />
                 </div>
             </main>
