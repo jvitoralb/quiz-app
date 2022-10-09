@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Score = ({ toRender, resQuestions, finish }) => {
+const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
     const initialState = {
         totalQuestions: resQuestions.length,
         rightCount: 0
@@ -19,7 +19,7 @@ const Score = ({ toRender, resQuestions, finish }) => {
             case 'play again':
                 return {
                     ...state,
-                    totalQuestions: resQuestions.length + resQuestions.length
+                    totalQuestions: state.totalQuestions + resQuestions.length
                 }
             case 'reset':
                 return reset(action.payload);
@@ -37,12 +37,12 @@ const Score = ({ toRender, resQuestions, finish }) => {
     }, [finish]);
 
     React.useEffect(() => {
-        resQuestions.forEach(item => {
-            if (item.resolve === 'resolve' && item.selected[1]) {
-                dispatch({type: 'increment'});
-            }
-        });
-    }, [resQuestions]);
+        const { resolve, selected } = toRenderRef;
+
+        if (resolve === 'resolve' && selected[1]) {
+            dispatch({type: 'increment'});
+        }
+    }, [toRenderRef]);
 
     const decodedCategory = decodeURIComponent(toRender.category);
 
@@ -53,17 +53,37 @@ const Score = ({ toRender, resQuestions, finish }) => {
     const editCategory = ((category) =>
         category.replace('Entertainment: ', '')
     )(decodedCategory);
-
 // console.log(score)
     return (
         <React.Fragment>
-            <div className='score'>
-                <p>Score {score.rightCount}/{score.totalQuestions}</p>
-                <p title={`Category ${decodedCategory}`}>{editCategory}</p>
-                <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
-            </div>
+            {
+                finish === 'end game' ?
+                <div
+                    className='score'
+                    style={{flexDirection: 'column', paddingTop: '0'}}
+                >
+                    {
+                        score.rightCount >= 1 ?
+                        <React.Fragment>
+                            <p>Congrats!!</p>
+                            <p>You got {score.rightCount} {score.rightCount > 1 ? 'questions' : 'question'} right!</p>
+                        </React.Fragment>
+                        :
+                        <React.Fragment>
+                            <p>Fighting!!</p>
+                            <p>You can do better next time!</p>
+                        </React.Fragment>
+                    }
+                </div>
+                :
+                <div className='score'>
+                    <p>Score {score.rightCount}/{score.totalQuestions}</p>
+                    <p title={`Category ${decodedCategory}`}>{editCategory}</p>
+                    <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
+                </div>
+            }
 
-            {/* Dev
+            {/* Dev 
             <button onClick={
                 () => dispatch({type: 'reset', payload: initialState})
             }
