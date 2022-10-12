@@ -16,8 +16,10 @@ const Quiz = ({ status, restartStatus }) => {
         finish: 'start',
         forceAswr: false
     }
-    /**
-     * API is called twice of rsome weird reason
+    /** 
+     * Need To refactor a bit
+     * Perhaps change folder structure as well
+     * API is called twice for some weird reason
      * try to better structure questions state
      * need to separate CSS files its quite messy
     **/
@@ -167,7 +169,7 @@ const Quiz = ({ status, restartStatus }) => {
         setConfig(initialConfig);
         restartStatus();
     }
-console.log(game)
+// console.log(game)
 // console.log(config)
     return (
         status && <React.Fragment>
@@ -199,8 +201,8 @@ console.log(game)
                 </React.Fragment>
             }
             <Buttons
+                {...config}
                 toRenderRef={questionRef}
-                forceAswr={config.forceAswr}
                 resQuestions={game.resQuestions}
                 util={{forceAnswer, showAnswer, finishGame, updateRender, quitGame}}
             />
