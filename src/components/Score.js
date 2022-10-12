@@ -4,10 +4,11 @@ import React from 'react';
 const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
     const initialState = {
         totalQuestions: resQuestions.length,
-        rightCount: 0
+        rightCount: 0,
+        round: 1
     }
-
-    const reset = () => initialState;
+// I actually don't think if  I exit on ENDGAME the Score is reseted
+    const reset = (initial) => initial;
 
     const reducer = (state, action) => {
         switch(action.type) {
@@ -19,7 +20,8 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
             case 'play again':
                 return {
                     ...state,
-                    totalQuestions: state.totalQuestions + resQuestions.length
+                    totalQuestions: state.totalQuestions + resQuestions.length,
+                    round: state.round + 1
                 }
             case 'reset':
                 return reset(action.payload);
@@ -53,36 +55,41 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
     const editCategory = ((category) =>
         category.replace('Entertainment: ', '')
     )(decodedCategory);
+
+    const succesRategt = (rateToCompare) => (score.rightCount / score.totalQuestions) > rateToCompare;
 // console.log(score)
     return (
-        <React.Fragment>
+        finish === 'end game'
+        ?
+        <div className='score score-col'>
             {
-                finish === 'end game' ?
-                <div
-                    className='score'
-                    style={{flexDirection: 'column', paddingTop: '0'}}
-                >
+                score.round < 2
+                ?
+                <React.Fragment>
+                    <p>{succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!'}</p>
                     {
-                        score.rightCount >= 1 ?
-                        <React.Fragment>
-                            <p>Congrats!!</p>
-                            <p>You got {score.rightCount} {score.rightCount > 1 ? 'questions' : 'question'} right!</p>
-                        </React.Fragment>
+                        !succesRategt(0.2)
+                        ?
+                        <p>You can do better next time!!</p>
                         :
-                        <React.Fragment>
-                            <p>Fighting!!</p>
-                            <p>You can do better next time!</p>
-                        </React.Fragment>
+                        <p>You got {score.rightCount} question{score.rightCount > 1 && 's'} right!</p>
                     }
-                </div>
+                </React.Fragment>
                 :
-                <div className='score'>
-                    <p>Score {score.rightCount}/{score.totalQuestions}</p>
-                    <p title={`Category ${decodedCategory}`}>{editCategory}</p>
-                    <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
-                </div>
+                <React.Fragment>
+                    <p>Round {score.round} done!!</p>
+                    <p>
+                        You got {score.rightCount} question{score.rightCount > 1 && 's'} right so far!<br />
+                        {!succesRategt(0.4) && 'Keep Working!'}
+                    </p>
+                </React.Fragment>
             }
-
+        </div>
+        :
+        <div className='score'>
+            <p>Score {score.rightCount}/{score.totalQuestions}</p>
+            <p title={`Category ${decodedCategory}`}>{editCategory}</p>
+            <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
             {/* Dev 
             <button onClick={
                 () => dispatch({type: 'reset', payload: initialState})
@@ -91,7 +98,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
                 dev
             </button>
             {/* Dev */}
-        </React.Fragment>
+        </div>
     );
 }
 
