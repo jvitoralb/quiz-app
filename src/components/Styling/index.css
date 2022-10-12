@@ -60,10 +60,12 @@ body {
 
 .home-text {
     font-weight: 400;
+    padding: 8px;
+    margin: 8px;
 }
 
 .start-btn {
     padding: 12px 16px;
-    margin: 24px 16px 16px;
+    margin: 16px;
     background-color: white;
 }

@@ -9,8 +9,12 @@
     justify-content: space-around;
 }
 
+.score-col {
+    flex-direction: column;
+}
+
 .score > p {
-    margin: 8px;
+    margin: 4px;
 }
 
 .question {
@@ -61,7 +65,7 @@
 
 .show-reset-btn {
     color: rgb(87, 87, 87);
-    margin: 5px;
+    margin: 8px;
     padding: 8px 10px 10px;
 }
 
@@ -84,18 +88,20 @@
 .end-game {
     font-weight: 400;
     text-align: start;
-    padding: 3px 36px;
-    width: 480px;
+    padding: 6px 36px;
+    max-width: 480px;
 }
 
 .end-quest {
     cursor: pointer;
-    padding: 6px;
+    padding: 8px 5px;
+    border: 1px solid transparent;
 }
 
 .end-quest:hover {
     border-radius: 5px;
-    transform: scale(1.025);
+    border-color: #ccc;
+    transform: scale(1.01);
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
 }
 
