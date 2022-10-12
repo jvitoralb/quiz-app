@@ -1,7 +1,9 @@
 import React from 'react';
 
 
-const Buttons = ({ forceAswr, toRenderRef, resQuestions, util }) => {
+const Buttons = (props) => {
+    let { forceAswr, finish, toRenderRef, resQuestions, util } = props;
+
     const {
         forceAnswer,
         showAnswer,
@@ -59,12 +61,14 @@ const Buttons = ({ forceAswr, toRenderRef, resQuestions, util }) => {
             >
                 {buttonDisplay[toRenderRef.resolve](false)}
             </button>
-            <button
-                className='show-reset-btn'
-                onClick={quitGame}
-            >
-                Exit
-            </button>
+            {
+                finish === 'end game' && <button
+                    className='show-reset-btn'
+                    onClick={quitGame}
+                >
+                    Exit
+                </button>
+            }
         </React.Fragment>
     );
 }
