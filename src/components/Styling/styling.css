@@ -4,17 +4,15 @@
 
 .score {
     font-size: 22px;
+}
+
+.score > * {
     padding: 8px;
+}
+
+.score-stats {
     display: flex;
     justify-content: space-around;
-}
-
-.score-col {
-    flex-direction: column;
-}
-
-.score > p {
-    margin: 4px;
 }
 
 .question {

@@ -7,7 +7,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
         rightCount: 0,
         round: 1
     }
-// I actually don't think if  I exit on ENDGAME the Score is reseted
+
     const reset = (initial) => initial;
 
     const reducer = (state, action) => {
@@ -61,12 +61,12 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
     return (
         finish === 'end game'
         ?
-        <div className='score score-col'>
+        <div className='score'>
             {
                 score.round < 2
                 ?
                 <React.Fragment>
-                    <p>{succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!'}</p>
+                    <p>{succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!!'}</p>
                     {
                         !succesRategt(0.2)
                         ?
@@ -88,8 +88,10 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
         :
         <div className='score'>
             <p>Score {score.rightCount}/{score.totalQuestions}</p>
-            <p title={`Category ${decodedCategory}`}>{editCategory}</p>
-            <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
+            <div className='score-stats'>
+                <p title={`Category ${decodedCategory}`}>{editCategory}</p>
+                <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
+            </div>
             {/* Dev 
             <button onClick={
                 () => dispatch({type: 'reset', payload: initialState})
