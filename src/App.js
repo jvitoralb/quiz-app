@@ -5,7 +5,7 @@ import './components/Styling/index.css';
 
 
 const App = () => {
-    const [mainConfig, setMainConfig] = React.useState({
+    const initialState = {
         status: false,
         category: {
             trivia: [],
@@ -15,7 +15,8 @@ const App = () => {
             all: ['any', 'easy', 'medium', 'hard'],
             selected: 'any'
         }
-    });
+    }
+    const [mainConfig, setMainConfig] = React.useState(initialState);
 
     const start = () => setMainConfig(prevConfig => ({
             ...prevConfig,
@@ -63,35 +64,34 @@ const App = () => {
         })
     );
 // console.log(mainConfig)
-    const devHomePage = (
+    const HomePage = (
         <React.Fragment>
-            <p>Let's Play a really cool Trivia Quiz</p>
+            <section id='welcome-section' className='home-sec'>
+                <p>Let's Play a really cool Trivia Quiz?!</p>
+                <p>But first...</p>
+            </section>
             <form id='category-difficulty-form' className='quiz-form'>
-                <label>
-                    Pick a Category
-                    <select value={mainConfig.category.selected} onChange={selectCategory}>
-                        <option id={'default'} value={'any'}>Any category</option>
-                        {
-                            mainConfig.category.trivia.map((item, idx) => (
-                                <option key={item.id + idx} id={item.name} value={item.id}>
-                                    {item.name}
-                                </option>
-                            ))
-                        }
-                    </select>
-                </label>
-                <label>
-                    Difficulty
-                    <select value={mainConfig.difficulty.selected} onChange={selectDifficulty}>
-                        {
-                            mainConfig.difficulty.all.map((item, idx) => (
-                                <option key={idx + item} id={`level-${idx}`} value={item}>
-                                    {item}
-                                </option>
-                            ))
-                        }
-                    </select>
-                </label>
+                <label>Pick a Category</label>
+                <select value={mainConfig.category.selected} onChange={selectCategory}>
+                    <option id={'default'} value={'any'}>Any Category</option>
+                    {
+                        mainConfig.category.trivia.map((item, idx) => (
+                            <option key={item.id + idx} id={item.name} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))
+                    }
+                </select>
+                <label>Difficulty</label>
+                <select value={mainConfig.difficulty.selected} onChange={selectDifficulty}>
+                    {
+                        mainConfig.difficulty.all.map((item, idx) => (
+                            <option key={idx + item} id={`level-${idx}`} value={item}>
+                                {item}
+                            </option>
+                        ))
+                    }
+                </select>
             </form>
             <button
                 className='start-btn'
@@ -107,7 +107,7 @@ const App = () => {
             <Header />
             <main id='main' className='page-main'>
                 <div className='home'>
-                    {!mainConfig.status && devHomePage}
+                    {!mainConfig.status && HomePage}
                     <Quiz
                         status={mainConfig.status}
                         category={mainConfig.category.selected}
