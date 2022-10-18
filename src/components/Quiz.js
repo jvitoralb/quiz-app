@@ -18,6 +18,7 @@ const Quiz = ({ status, restartStatus, category, level }) => {
     }
     /**
      * Need To refactor a bit
+     * Need to setup a loading page while the API is being called in start and play again
      * Perhaps change folder structure as well
      * API is called twice for some weird reason (this just happens at first render)
      * try to better structure questions state

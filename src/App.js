@@ -33,16 +33,18 @@ const App = () => {
                 }
             })
         );
+
         const getAPISettings = async () => {
             // Need to request a Session KEY yet
             try {
-                const categoryRes = await fetch('https://opentdb.com/api_category.php')
+                const categoryRes = await fetch('https://opentdb.com/api_category.php');
                 const responseData = await categoryRes.json();
-                return saveToGame(responseData)
+                return saveToGame(responseData);
             } catch(err) {
                 console.log(err)
             }
         }
+
         getAPISettings()
     }, []);
 
@@ -65,11 +67,9 @@ const App = () => {
     );
 // console.log(mainConfig)
     const HomePage = (
-        <React.Fragment>
-            <section id='welcome-section' className='home-sec'>
-                <p>Let's Play a really cool Trivia Quiz?!</p>
-                <p>But first...</p>
-            </section>
+        <section id='welcome-section' className='home-sec'>
+            <p>Let's Play a really cool Trivia Quiz?!</p>
+            <p>But first...</p>
             <form id='category-difficulty-form' className='quiz-form'>
                 <label>Pick a Category</label>
                 <select value={mainConfig.category.selected} onChange={selectCategory}>
@@ -77,7 +77,7 @@ const App = () => {
                     {
                         mainConfig.category.trivia.map((item, idx) => (
                             <option key={item.id + idx} id={item.name} value={item.id}>
-                                {item.name}
+                                {item.name.replace('Entertainment: ', '')}
                             </option>
                         ))
                     }
@@ -87,7 +87,7 @@ const App = () => {
                     {
                         mainConfig.difficulty.all.map((item, idx) => (
                             <option key={idx + item} id={`level-${idx}`} value={item}>
-                                {item}
+                                {item.slice(0, 1).toUpperCase() + item.slice(1)}
                             </option>
                         ))
                     }
@@ -99,7 +99,7 @@ const App = () => {
             >
                 Start Playing
             </button>
-        </React.Fragment>
+        </section>
     );
 
     return (
