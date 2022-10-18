@@ -1,13 +1,13 @@
 import React from 'react';
-import Options from './Options';
-import Questions from './Questions';
-import Buttons from './Buttons';
-import Score from './Score';
+import Options from './SubComponents/Options';
+import Questions from './SubComponents/Questions';
+import Buttons from './SubComponents/Buttons';
+import Score from './SubComponents/Score';
 import EndGame from './EndGame';
 import './Styling/styling.css';
 
 
-const Quiz = ({ status, restartStatus, category, level }) => {
+const Quiz = ({ status, restart, category, level }) => {
     const initialGame = {
         allQuestions: [],
         resQuestions: []
@@ -61,7 +61,7 @@ const Quiz = ({ status, restartStatus, category, level }) => {
 
             if (category !== 'any') {
                 categoryLevel = `&category=${category}`;
-            }
+            } // it might be possible to set this up in App.js
             if (level !== 'any') {
                 categoryLevel = `${categoryLevel}&difficulty=${level}`;
             }
@@ -181,7 +181,7 @@ const Quiz = ({ status, restartStatus, category, level }) => {
     const quitGame = () => {
         setGame(initialGame);
         setConfig(initialConfig);
-        restartStatus();
+        restart();
     }
 // console.log(game)
 // console.log(config)
