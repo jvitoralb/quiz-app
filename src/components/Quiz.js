@@ -7,7 +7,7 @@ import EndGame from './EndGame';
 import './Styling/styling.css';
 
 
-const Quiz = ({ status, restartStatus }) => {
+const Quiz = ({ status, restartStatus, category, level }) => {
     const initialGame = {
         allQuestions: [],
         resQuestions: []
@@ -16,12 +16,11 @@ const Quiz = ({ status, restartStatus }) => {
         finish: 'start',
         forceAswr: false
     }
-    /** 
+    /**
      * Need To refactor a bit
      * Perhaps change folder structure as well
-     * API is called twice for some weird reason
+     * API is called twice for some weird reason (this just happens at first render)
      * try to better structure questions state
-     * need to separate CSS files its quite messy
     **/
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
@@ -57,9 +56,18 @@ const Quiz = ({ status, restartStatus }) => {
         }
 
         const getData = async () => {
+            let categoryLevel = '';
+
+            if (category !== 'any') {
+                categoryLevel = `&category=${category}`;
+            }
+            if (level !== 'any') {
+                categoryLevel = `${categoryLevel}&difficulty=${level}`;
+            }
+
             try {
                 console.log('API Call fired')
-                const response = await fetch('https://opentdb.com/api.php?amount=5&encode=url3986');
+                const response = await fetch(`https://opentdb.com/api.php?amount=5${categoryLevel}&encode=url3986`);
                 const data = await response.json();
                 questState(data.results);
             } catch(err) {
@@ -67,13 +75,18 @@ const Quiz = ({ status, restartStatus }) => {
             }
         }
 
-        if (['start', 'play again'].includes(config.finish)) {
+        if (['start', 'play again'].includes(config.finish) && status) {
             getData();
         }
-    }, [config.finish]);
+    }, [config.finish, category, level, status]);
 
     React.useEffect(() => {
-        if (game.resQuestions.every(obj => obj.resolve === 'done')) {
+        /**
+         * At first render this is setting finish to end game
+         * condition is saying true
+         * perhaps this is why the API is being called twice(this just happens at first render)
+        **/
+        if (game.resQuestions.length && game.resQuestions.every(obj => obj.resolve === 'done')) {
             setConfig(prevConfig => ({
                 ...prevConfig,
                 finish: 'end game'
@@ -172,7 +185,7 @@ const Quiz = ({ status, restartStatus }) => {
 // console.log(game)
 // console.log(config)
     return (
-        status && <React.Fragment>
+        (status && config.finish !== 'start') && <React.Fragment>
             <Score
                 toRender={questionToRender}
                 toRenderRef={questionRef}
