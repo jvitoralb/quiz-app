@@ -112,7 +112,7 @@ const App = () => {
                         status={mainConfig.status}
                         category={mainConfig.category.selected}
                         level={mainConfig.difficulty.selected}
-                        restartStatus={start}
+                        restart={start}
                     />
                 </div>
             </main>
