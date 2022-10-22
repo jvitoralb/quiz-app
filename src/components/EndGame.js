@@ -3,33 +3,42 @@ import React from 'react';
 
 const EndGame = ({ allQuestions, resQuestions }) => {
     const initialReport = {
-        show: false,
         id: ''
     }
     const [report, setReport] = React.useState(initialReport);
 
     const showStats = (questionID) => setReport(prev =>
         questionID === prev.id ? ({
-            show: false,
             id: ''
         }) : ({
-            show: true,
             id: questionID
         })
     );
 
     const getClass = (correctAswr, selectedID) => {
-        let questRight = (correctAswr ? 'q-right' : 'q-wrong');
+        let classVal = (correctAswr ? 'q-right' : 'q-wrong');
 
-        if (report.id === selectedID) {
-            return `quest-selected ${questRight}`;
+        if (correctAswr === null) {
+            classVal = '';
         }
 
-        return `quest-default ${questRight}`;
+        if (report.id === selectedID) {
+            return `quest-selected ${classVal}`;
+        }
+
+        return `quest-default ${classVal}`;
     }
 
+    const getUserAnswer = (questionIdx, valueIdx) => {
+        let refObject = resQuestions[questionIdx];
+
+        if (refObject.selected[valueIdx] === `force${refObject.ref}`) {
+            return;
+        }
+        return refObject.selected[valueIdx];
+    };
+
     const editDifficulty = (level) => level.slice(0, 1).toUpperCase() + level.slice(1);
-    const getUserAnswer = (questionIdx, valueIdx) => resQuestions[questionIdx].selected[valueIdx];
 
     const EndInterface = allQuestions.map((obj, idx) => {
         let userRight = getUserAnswer(idx, 1);
@@ -45,21 +54,21 @@ const EndGame = ({ allQuestions, resQuestions }) => {
                     {idx + 1}. {decodeURIComponent(obj.question)}
                 </p>
                 {
-                    report.show && report.id === obj.id && <ul className='end-list'>
+                    report.id === obj.id && <ul className='end-list'>
                         <li>{editCategory}</li>
                         <li>Difficulty: {editDifficulty(obj.difficulty)}</li>
-                        <li>Your Answer: {decodeURIComponent(userString)}</li>
                         {
-                            !userRight && <li>
-                                Correct Answer: {decodeURIComponent(obj.correct_answer)}
-                            </li>
+                            userString && <li>Your Answer: {decodeURIComponent(userString)}</li>
+                        }
+                        {
+                            !userRight && <li>Correct Answer: {decodeURIComponent(obj.correct_answer)}</li>
                         }
                     </ul>
                 }
             </React.Fragment>
         );
     });
-
+// console.log(report)
     return (
         <div className='end-game'>
             {EndInterface}

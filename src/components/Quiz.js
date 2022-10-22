@@ -20,7 +20,6 @@ const Quiz = ({ status, restart, category, level }) => {
      * Need To refactor a bit
      * Need to setup a loading page while the API is being called in start and play again
      * API is called twice for some weird reason (this just happens at first render)
-     * Change end game for showing a forced answer
     **/
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
@@ -155,7 +154,7 @@ const Quiz = ({ status, restart, category, level }) => {
                 resQuestions: prevGame.resQuestions.map(obj =>
                     obj === questionRef ? ({
                         ...obj,
-                        selected: [`force-${obj.ref}`, false],
+                        selected: [`force${obj.ref}`, null],
                         resolve: 'resolve'
                     }) : obj
                 )
