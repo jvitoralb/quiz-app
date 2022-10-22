@@ -7,7 +7,7 @@ import EndGame from './EndGame';
 import './Styling/styling.css';
 
 
-const Quiz = ({ status, restart, category, level }) => {
+const Quiz = ({ status, restart, settings }) => {
     const initialGame = {
         allQuestions: [],
         resQuestions: []
@@ -16,6 +16,10 @@ const Quiz = ({ status, restart, category, level }) => {
         finish: 'start',
         forceAswr: false
     }
+    /**
+     * FOR DAY 22/10
+     * Work on load page for when API is loading <<End game - playing again>> and <<Start playing>>
+    **/
     /**
      * Need To refactor a bit
      * Need to setup a loading page while the API is being called in start and play again
@@ -55,14 +59,7 @@ const Quiz = ({ status, restart, category, level }) => {
         }
 
         const getData = async () => {
-            let categoryLevel = '';
-
-            if (category !== 'any') {
-                categoryLevel = `&category=${category}`;
-            } // it might be possible to set this up in App.js
-            if (level !== 'any') {
-                categoryLevel = `${categoryLevel}&difficulty=${level}`;
-            }
+            let categoryLevel = settings;
 
             try {
                 console.log('API Call fired')
@@ -77,7 +74,7 @@ const Quiz = ({ status, restart, category, level }) => {
         if (['start', 'play again'].includes(config.finish) && status) {
             getData();
         }
-    }, [config.finish, category, level, status]);
+    }, [config.finish, settings, status]);
 
     React.useEffect(() => {
         const questArr = game.resQuestions;

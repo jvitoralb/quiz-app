@@ -65,7 +65,21 @@ const App = () => {
             }
         })
     );
-// console.log(mainConfig)
+
+    const settingCall = () => {
+        const { category, difficulty } = mainConfig;
+        let categoryLevel = '';
+
+        if (category.selected !== 'any') {
+            categoryLevel = `&category=${category.selected}`;
+        }
+        if (difficulty.selected !== 'any') {
+            categoryLevel = `${categoryLevel}&difficulty=${difficulty.selected}`;
+        }
+
+        return categoryLevel;
+    }
+
     const HomePage = (
         <section id='welcome-section' className='home-sec'>
             <p>Let's Play a really cool Trivia Quiz?!</p>
@@ -110,8 +124,7 @@ const App = () => {
                     {!mainConfig.status && HomePage}
                     <Quiz
                         status={mainConfig.status}
-                        category={mainConfig.category.selected}
-                        level={mainConfig.difficulty.selected}
+                        settings={settingCall()}
                         restart={start}
                     />
                 </div>
