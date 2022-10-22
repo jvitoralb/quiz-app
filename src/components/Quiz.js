@@ -19,9 +19,8 @@ const Quiz = ({ status, restart, category, level }) => {
     /**
      * Need To refactor a bit
      * Need to setup a loading page while the API is being called in start and play again
-     * Perhaps change folder structure as well
      * API is called twice for some weird reason (this just happens at first render)
-     * try to better structure questions state
+     * Change end game for showing a forced answer
     **/
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
@@ -82,12 +81,8 @@ const Quiz = ({ status, restart, category, level }) => {
     }, [config.finish, category, level, status]);
 
     React.useEffect(() => {
-        /**
-         * At first render this is setting finish to end game
-         * condition is saying true
-         * perhaps this is why the API is being called twice(this just happens at first render)
-        **/
-        if (game.resQuestions.length && game.resQuestions.every(obj => obj.resolve === 'done')) {
+        const questArr = game.resQuestions;
+        if (questArr.length && questArr.every(obj => obj.resolve === 'done')) {
             setConfig(prevConfig => ({
                 ...prevConfig,
                 finish: 'end game'
@@ -120,15 +115,15 @@ const Quiz = ({ status, restart, category, level }) => {
         )
     }));
 
-    const correct = (answer) => answer === questionToRender.correct_answer;
-
     const selectAnswer = (item, questionID) => setGame(prevGame => ({
             ...prevGame,
-            resQuestions: prevGame.resQuestions.map(selectObj =>
-                selectObj.ref === questionID ? ({
-                    ...selectObj,
-                    selected: (selectObj.selected.includes(item) ? [] : [item, correct(item, questionID)])
-                }) : selectObj
+            resQuestions: prevGame.resQuestions.map(resObj =>
+                resObj.ref === questionID ? ({
+                    ...resObj,
+                    selected: (
+                        resObj.selected.includes(item) ? [] : [item, item === questionToRender.correct_answer]
+                    )
+                }) : resObj
             )
         })
     );
@@ -186,7 +181,7 @@ const Quiz = ({ status, restart, category, level }) => {
 // console.log(game)
 // console.log(config)
     return (
-        (status && config.finish !== 'start') && <React.Fragment>
+        config.finish !== 'start' && <React.Fragment>
             <Score
                 toRender={questionToRender}
                 toRenderRef={questionRef}
