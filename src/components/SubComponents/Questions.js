@@ -4,15 +4,13 @@ import React from 'react';
 const Questions = ({ toRender, toRenderIndex, toRenderRef }) => {
 
     const getClass = () => {
-        if (toRenderRef.selected[1] === null) {
-            return '';
-        }
+        let classVal = '';
 
         if (toRenderRef.resolve === 'resolve') {
-            return toRenderRef.selected[1] ? 'q-right' : 'q-wrong';
+            classVal = (toRenderRef.selected[1] ? 'q-right' : 'q-wrong');
         }
 
-        return '';
+        return toRenderRef.selected[1] === null ? '' : classVal;
     }
 
     const decodedQuestion = decodeURIComponent(toRender.question);
