@@ -59,48 +59,47 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
 
     const succesRategt = (rateToCompare) => (score.rightCount / score.totalQuestions) > rateToCompare;
 
-    return (
-        finish === 'end game'
-        ?
-        <div className='score'>
-            {
+    const scoreBoard = {
+        'play again': () => <LoadingScore />,
+        'playing': () => (
+            <React.Fragment>
+                <p>Score {score.rightCount}/{score.totalQuestions}</p>
+                <div className='score-stats'>
+                    <p title={`Category ${decodedCategory}`}>{editCategory}</p>
+                    <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
+                </div>
+            </React.Fragment>
+        ),
+        'end game': () => {
+            let effect = succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!!';
+            let feedback = `You got ${score.rightCount} question${score.rightCount > 1 && 's'} right`;
+            return (
                 score.round < 2
                 ?
                 <React.Fragment>
-                    <p>{succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!!'}</p>
+                    <p>{effect}</p>
                     {
                         !succesRategt(0.2)
                         ?
                         <p>You can do better next time!!</p>
                         :
-                        <p>You got {score.rightCount} question{score.rightCount > 1 && 's'} right!</p>
+                        <p>{feedback}!</p>
                     }
                 </React.Fragment>
                 :
                 <React.Fragment>
                     <p>Round {score.round} done!!</p>
                     <p>
-                        You got {score.rightCount} question{score.rightCount > 1 && 's'} right so far!<br />
-                        {!succesRategt(0.4) && 'Keep Working!'}
+                        {feedback} so far! <br /> {effect}
                     </p>
                 </React.Fragment>
-            }
-        </div>
-        :
+            )
+        }
+    }
+
+    return (
         <div className='score'>
-            {
-                finish === 'play again'
-                ?
-                <LoadingScore />
-                :
-                <React.Fragment>
-                    <p>Score {score.rightCount}/{score.totalQuestions}</p>
-                    <div className='score-stats'>
-                        <p title={`Category ${decodedCategory}`}>{editCategory}</p>
-                        <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
-                    </div>
-                </React.Fragment>
-            }
+            {scoreBoard[finish]()}
         </div>
     );
 }
