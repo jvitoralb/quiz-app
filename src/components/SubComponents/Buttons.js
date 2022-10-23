@@ -54,21 +54,19 @@ const Buttons = (props) => {
             </button>
         </div>
         :
-        <React.Fragment>
+        ['playing', 'end game'].includes(finish) && <React.Fragment>
             <button
                 className='show-reset-btn'
                 onClick={buttonDisplay[toRenderRef.resolve](true)}
             >
                 {buttonDisplay[toRenderRef.resolve](false)}
             </button>
-            {
-                finish === 'end game' && <button
-                    className='show-reset-btn'
-                    onClick={quitGame}
-                >
-                    Exit
-                </button>
-            }
+            <button
+                className='show-reset-btn'
+                onClick={quitGame}
+            >
+                Exit
+            </button>
         </React.Fragment>
     );
 }

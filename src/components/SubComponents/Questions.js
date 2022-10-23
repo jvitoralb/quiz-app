@@ -1,10 +1,14 @@
 import React from 'react';
 
 
-const Questions = ({ toRender, toRenderIndex, toRenderRef }) => {
+const Questions = ({ toRender, toRenderIndex, toRenderRef, finish }) => {
 
     const getClass = () => {
         let classVal = '';
+
+        if (finish === 'play again') {
+            return 'loading-anim';
+        }
 
         if (toRenderRef.resolve === 'resolve') {
             classVal = (toRenderRef.selected[1] ? 'q-right' : 'q-wrong');

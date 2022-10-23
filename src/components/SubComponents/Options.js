@@ -1,9 +1,14 @@
 import React from 'react';
+import { LoadingOptions } from '../Waiting';
 
 
-const Options = ({ toRender, toRenderRef, select, forceAnswer }) => {
+const Options = ({ toRender, toRenderRef, select, forceAnswer, finish }) => {
 
     const getClass = (aswr) => {
+
+        if (finish === 'play again') {
+            return 'loading-anim';
+        }
 
         if (toRenderRef.selected.includes(aswr)) {
             return 'selected';

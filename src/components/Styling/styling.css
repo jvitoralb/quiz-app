@@ -121,16 +121,17 @@
     padding: 1.5px 6px;
 }
 
-.anim-test {
-    background-color: rgba(78, 78, 78, 0.35);
+.loading-anim {
     height: 24px;
     width: 100%;
     margin: 3px;
     border-radius: 0;
+    color: transparent;
+    background-color: rgba(78, 78, 78, 0.35);
     animation: loading 900ms ease infinite;
 }
 
-.anim-test:hover {
+.loading-anim:hover {
     cursor: unset;
 }
 

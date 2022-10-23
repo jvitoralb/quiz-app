@@ -1,21 +1,33 @@
 import React from 'react';
 
 
+export const LoadingScore = () => (
+    <React.Fragment>
+        <p className='loading-anim'></p>
+        <div className='score-stats'>
+            <p className='loading-anim'></p>
+            <p className='loading-anim'></p>
+        </div>
+    </React.Fragment>
+);
+
+export const LoadingOptions = () => (
+    <React.Fragment>
+        <li className='loading-anim'></li>
+        <li className='loading-anim'></li>
+        <li className='loading-anim'></li>
+        <li className='loading-anim'></li>
+    </React.Fragment>
+);
+
 const Waiting = ({ status }) => (
     status && <React.Fragment>
         <div className='score'>
-            <p className='anim-test'></p>
-            <div className='score-stats'>
-                <p className='anim-test'></p>
-                <p className='anim-test'></p>
-            </div>
+            <LoadingScore />
         </div>
-        <p className='anim-test'></p>
+        <p className='loading-anim'></p>
         <ul className='list-options'>
-            <li className='anim-test'></li>
-            <li className='anim-test'></li>
-            <li className='anim-test'></li>
-            <li className='anim-test'></li>
+            <LoadingOptions />
         </ul>
     </React.Fragment>
 );

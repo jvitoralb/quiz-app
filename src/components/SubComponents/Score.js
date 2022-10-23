@@ -1,4 +1,5 @@
 import React from 'react';
+import { LoadingScore } from '../Waiting';
 
 
 const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
@@ -87,11 +88,19 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
         </div>
         :
         <div className='score'>
-            <p>Score {score.rightCount}/{score.totalQuestions}</p>
-            <div className='score-stats'>
-                <p title={`Category ${decodedCategory}`}>{editCategory}</p>
-                <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
-            </div>
+            {
+                finish === 'play again'
+                ?
+                <LoadingScore />
+                :
+                <React.Fragment>
+                    <p>Score {score.rightCount}/{score.totalQuestions}</p>
+                    <div className='score-stats'>
+                        <p title={`Category ${decodedCategory}`}>{editCategory}</p>
+                        <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
+                    </div>
+                </React.Fragment>
+            }
         </div>
     );
 }

@@ -19,7 +19,6 @@ const Quiz = ({ status, restart, settings }) => {
     }
     /**
      * Need To refactor a bit
-     * Need to setup a loading page while the API is being called in start and play again
      * API is called twice for some weird reason (this just happens at first render)
     **/
     const [config, setConfig] = React.useState(initialConfig);
@@ -160,8 +159,8 @@ const Quiz = ({ status, restart, settings }) => {
         }));
     }
 
-    const finishGame = () => setConfig(prevGame => ({
-            ...prevGame,
+    const finishGame = () => setConfig(prevConfig => ({
+            ...prevConfig,
             finish: 'play again'
         })
     );
@@ -174,7 +173,7 @@ const Quiz = ({ status, restart, settings }) => {
 // console.log(game)
 // console.log(config)
     return (
-        ['start', 'play again'].includes(config.finish)
+        config.finish === 'start'
         ?
         <Waiting
             status={status}
@@ -199,12 +198,14 @@ const Quiz = ({ status, restart, settings }) => {
                         toRender={questionToRender}
                         toRenderIndex={questionIndex}
                         toRenderRef={questionRef}
+                        finish={config.finish}
                     />
                     <Options
                         toRender={questionToRender}
                         toRenderRef={questionRef}
                         forceAnswer={config.forceAswr}
                         select={selectAnswer}
+                        finish={config.finish}
                     />
                 </React.Fragment>
             }
