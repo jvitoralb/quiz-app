@@ -120,3 +120,31 @@
 .end-list > li {
     padding: 1.5px 6px;
 }
+
+.anim-test {
+    background-color: rgba(78, 78, 78, 0.35);
+    height: 24px;
+    width: 100%;
+    margin: 3px;
+    border-radius: 0;
+    animation: loading 900ms ease infinite;
+}
+
+.anim-test:hover {
+    cursor: unset;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 100%;
+    }
+
+    50% {
+        background-color: rgba(56, 56, 56, 0.55);
+        background-position: 0%;
+    }
+
+    100% {
+        background-position: 100%;
+    }
+}

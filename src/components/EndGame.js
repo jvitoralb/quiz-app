@@ -57,12 +57,8 @@ const EndGame = ({ allQuestions, resQuestions }) => {
                     report.id === obj.id && <ul className='end-list'>
                         <li>{editCategory}</li>
                         <li>Difficulty: {editDifficulty(obj.difficulty)}</li>
-                        {
-                            userString && <li>Your Answer: {decodeURIComponent(userString)}</li>
-                        }
-                        {
-                            !userRight && <li>Correct Answer: {decodeURIComponent(obj.correct_answer)}</li>
-                        }
+                        {userString && <li>Your Answer: {decodeURIComponent(userString)}</li>}
+                        {!userRight && <li>Correct Answer: {decodeURIComponent(obj.correct_answer)}</li>}
                     </ul>
                 }
             </React.Fragment>

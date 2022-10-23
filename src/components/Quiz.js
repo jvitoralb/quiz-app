@@ -4,6 +4,7 @@ import Questions from './SubComponents/Questions';
 import Buttons from './SubComponents/Buttons';
 import Score from './SubComponents/Score';
 import EndGame from './EndGame';
+import Waiting from './Waiting';
 import './Styling/styling.css';
 
 
@@ -177,7 +178,13 @@ const Quiz = ({ status, restart, settings }) => {
 // console.log(game)
 // console.log(config)
     return (
-        config.finish !== 'start' && <React.Fragment>
+        ['start', 'play again'].includes(config.finish)
+        ?
+        <Waiting
+            status={status}
+        />
+        :
+        <React.Fragment>
             <Score
                 toRender={questionToRender}
                 toRenderRef={questionRef}
