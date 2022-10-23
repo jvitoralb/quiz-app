@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoadingOptions } from '../Waiting';
 
 
 const Options = ({ toRender, toRenderRef, select, forceAnswer, finish }) => {
