@@ -17,10 +17,7 @@ const Quiz = ({ status, restart, settings }) => {
         finish: 'start',
         forceAswr: false
     }
-    /**
-     * Need To refactor a bit
-     * API is called twice for some weird reason (this just happens at first render)
-    **/
+
     const [config, setConfig] = React.useState(initialConfig);
     const [game, setGame] = React.useState(initialGame);
 
@@ -55,11 +52,9 @@ const Quiz = ({ status, restart, settings }) => {
         }
 
         const getData = async () => {
-            let categoryLevel = settings;
-
             try {
-                console.log('API Call fired')
-                const response = await fetch(`https://opentdb.com/api.php?amount=5${categoryLevel}&encode=url3986`);
+                // console.log('API Call fired')
+                const response = await fetch(`https://opentdb.com/api.php?amount=5${settings}&encode=url3986`);
                 const data = await response.json();
                 questState(data.results);
             } catch(err) {
@@ -121,7 +116,6 @@ const Quiz = ({ status, restart, settings }) => {
     );
 
     const showAnswer = () => {
-
         if (!questionRef.selected.length) {
             return setConfig(prevConfig => ({
                 ...prevConfig,
@@ -153,6 +147,7 @@ const Quiz = ({ status, restart, settings }) => {
                 )
             }));
         }
+
         setConfig(prevGame => ({
             ...prevGame,
             forceAswr: false
@@ -170,8 +165,7 @@ const Quiz = ({ status, restart, settings }) => {
         setConfig(initialConfig);
         restart();
     }
-// console.log(game)
-// console.log(config)
+
     return (
         config.finish === 'start'
         ?
@@ -201,11 +195,10 @@ const Quiz = ({ status, restart, settings }) => {
                         finish={config.finish}
                     />
                     <Options
-                        toRender={questionToRender}
-                        toRenderRef={questionRef}
-                        forceAnswer={config.forceAswr}
+                        {...config}
                         select={selectAnswer}
-                        finish={config.finish}
+                        toRenderRef={questionRef}
+                        toRender={questionToRender}
                     />
                 </React.Fragment>
             }

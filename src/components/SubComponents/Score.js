@@ -27,7 +27,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
             case 'reset':
                 return reset(action.payload);
             default:
-                throw new Error(`Switch Error Action`);
+                throw new Error(`Reducer Action Error`);
         }
     }
 
@@ -57,10 +57,12 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
         category.replace('Entertainment: ', '')
     )(decodedCategory);
 
-    const succesRategt = (rateToCompare) => (score.rightCount / score.totalQuestions) > rateToCompare;
+    const successRategt = (rateToCompare) => (score.rightCount / score.totalQuestions) > rateToCompare;
 
     const scoreBoard = {
-        'play again': () => <LoadingScore />,
+        'play again': () => (
+            <LoadingScore />
+        ),
         'playing': () => (
             <React.Fragment>
                 <p>Score {score.rightCount}/{score.totalQuestions}</p>
@@ -71,7 +73,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
             </React.Fragment>
         ),
         'end game': () => {
-            let effect = succesRategt(0.4) ? 'Congrats!!' : 'Keep Working!!';
+            let effect = successRategt(0.4) ? 'Congrats!!' : 'Keep Working!!';
             let feedback = `You got ${score.rightCount} question${score.rightCount > 1 && 's'} right`;
             return (
                 score.round < 2
@@ -79,7 +81,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
                 <React.Fragment>
                     <p>{effect}</p>
                     {
-                        !succesRategt(0.2)
+                        !successRategt(0.2)
                         ?
                         <p>You can do better next time!!</p>
                         :
