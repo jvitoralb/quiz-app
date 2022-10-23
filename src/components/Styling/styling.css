@@ -61,15 +61,21 @@
     background-color: rgba(0, 194, 87, 0.1);
 }
 
-.show-reset-btn {
+.show-answer-btn {
     color: rgb(87, 87, 87);
     margin: 8px;
     padding: 8px 10px 10px;
 }
 
-.show-reset-btn:hover {
+.show-answer-btn:hover {
     color: black;
     font-weight: 400;
+}
+
+.exit-btn {
+    color: rgb(87, 87, 87);
+    margin: 8px;
+    padding: 4px 5px 5px;
 }
 
 .select-warning {
