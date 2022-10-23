@@ -64,7 +64,7 @@ const EndGame = ({ allQuestions, resQuestions }) => {
             </React.Fragment>
         );
     });
-// console.log(report)
+
     return (
         <div className='end-game'>
             {EndInterface}

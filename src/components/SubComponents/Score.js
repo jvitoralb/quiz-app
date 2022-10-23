@@ -57,7 +57,7 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
     )(decodedCategory);
 
     const succesRategt = (rateToCompare) => (score.rightCount / score.totalQuestions) > rateToCompare;
-// console.log(score)
+
     return (
         finish === 'end game'
         ?
@@ -92,14 +92,6 @@ const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
                 <p title={`Category ${decodedCategory}`}>{editCategory}</p>
                 <p title={`Difficulty ${editDifficulty}`}>{editDifficulty}</p>
             </div>
-            {/* Dev 
-            <button onClick={
-                () => dispatch({type: 'reset', payload: initialState})
-            }
-            >
-                dev
-            </button>
-            {/* Dev */}
         </div>
     );
 }

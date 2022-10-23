@@ -18,10 +18,6 @@ const Quiz = ({ status, restart, settings }) => {
         forceAswr: false
     }
     /**
-     * FOR DAY 22/10
-     * Work on load page for when API is loading <<End game - playing again>> and <<Start playing>>
-    **/
-    /**
      * Need To refactor a bit
      * Need to setup a loading page while the API is being called in start and play again
      * API is called twice for some weird reason (this just happens at first render)
@@ -218,21 +214,6 @@ const Quiz = ({ status, restart, settings }) => {
                 resQuestions={game.resQuestions}
                 util={{forceAnswer, showAnswer, finishGame, updateRender, quitGame}}
             />
-
-            {/* Dev 
-            <button onClick={
-                () => setGame(prevGame => ({
-                    ...prevGame,
-                    finish: false,
-                    resQuestions: prevGame.resQuestions.map(
-                        ({ ref }) => ({ref, resolve: 'initial', selected: []})
-                    )
-                }))}
-                style={{padding: `${10}px`}}
-            >
-                dev
-            </button>
-            {/* Dev */}
         </React.Fragment>
     );
 }
