@@ -4,13 +4,11 @@
 
 .score {
     font-size: 22px;
-}
-
-.score > * {
-    padding: 8px;
+    margin: 8px
 }
 
 .score-stats {
+    margin: 4px;
     display: flex;
     justify-content: space-around;
 }
@@ -39,12 +37,27 @@
 .default-items {
     padding: 3px 15px;
     justify-self: center;
+    align-self: center;
     border: 2px solid transparent;
     border-radius: 7px;
 }
 
 .default-items:hover {
     cursor: pointer;
+}
+
+@media (max-width: 420px) {
+    .score-stats {
+        justify-content: space-between;
+    }
+
+    .question {
+        padding: 0;
+    }
+
+    .default-items {
+        padding: 3px 5px;
+    }
 }
 
 .selected {
@@ -62,7 +75,7 @@
 }
 
 .show-answer-btn {
-    color: rgb(87, 87, 87);
+    color: rgb(66, 66, 66);
     margin: 8px;
     padding: 8px 10px 10px;
 }
@@ -73,10 +86,15 @@
 }
 
 .exit-btn {
-    color: rgb(87, 87, 87);
     margin: 8px;
     padding: 4px;
     font-size: 12px;
+    border-radius: 3px;
+    color: rgb(87, 87, 87);
+}
+
+.exit-btn:hover {
+    color: black;
 }
 
 .select-warning {
@@ -108,6 +126,12 @@
     border-color: #ccc;
     transform: scale(1.01);
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 420px) {
+    .end-game {
+        padding: 6px;
+    }
 }
 
 .quest-default {
