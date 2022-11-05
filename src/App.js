@@ -41,7 +41,7 @@ const App = () => {
                 const responseData = await categoryRes.json();
                 return saveToGame(responseData);
             } catch(err) {
-                console.log(err)
+                console.error(err)
             }
         }
 

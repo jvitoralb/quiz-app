@@ -65,7 +65,7 @@ const Buttons = (props) => {
                 className='exit-btn'
                 onClick={quitGame}
             >
-                Exit
+                Quit
             </button>
         </React.Fragment>
     );
