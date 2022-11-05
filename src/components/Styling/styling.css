@@ -119,6 +119,11 @@
     white-space: unset;
 }
 
+.quest-selected:hover {
+    transform: unset;
+    box-shadow: unset;
+}
+
 .end-list {
     list-style: none;
 }
