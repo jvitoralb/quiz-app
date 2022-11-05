@@ -75,7 +75,8 @@
 .exit-btn {
     color: rgb(87, 87, 87);
     margin: 8px;
-    padding: 4px 5px 5px;
+    padding: 4px;
+    font-size: 12px;
 }
 
 .select-warning {

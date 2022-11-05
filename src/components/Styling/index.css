@@ -40,6 +40,7 @@ body {
 .page-main {
     display: flex;
     justify-content: center;
+    height: 75vh;
 }
 
 /**
@@ -48,6 +49,7 @@ body {
 
 .home {
     text-align: center;
+    align-self: center;
     padding: 16px;
     margin: 16px;
     min-width: 360px;
@@ -87,5 +89,5 @@ body {
 .start-btn {
     padding: 12px 16px;
     margin: 8px;
-    background-color: white;
+    /* background-color: white; */
 }
