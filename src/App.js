@@ -1,6 +1,7 @@
 import React from 'react';
 import Quiz from './components/Quiz';
 import Header from './components/Header';
+import StartGame from './components/StartGame';
 import './components/Styling/index.css';
 
 
@@ -80,48 +81,16 @@ const App = () => {
         return categoryLevel;
     }
 
-    const HomePage = (
-        <section id='welcome-section' className='home-sec'>
-            <p>Let's Play a really cool Trivia Quiz?!</p>
-            <p>But first...</p>
-            <form id='category-difficulty-form' className='quiz-form'>
-                <label>Pick a Category</label>
-                <select value={mainConfig.category.selected} onChange={selectCategory}>
-                    <option id={'default'} value={'any'}>Any Category</option>
-                    {
-                        mainConfig.category.trivia.map((item, idx) => (
-                            <option key={item.id + idx} id={item.name} value={item.id}>
-                                {item.name.replace('Entertainment: ', '')}
-                            </option>
-                        ))
-                    }
-                </select>
-                <label>Difficulty</label>
-                <select value={mainConfig.difficulty.selected} onChange={selectDifficulty}>
-                    {
-                        mainConfig.difficulty.all.map((item, idx) => (
-                            <option key={idx + item} id={`level-${idx}`} value={item}>
-                                {item.slice(0, 1).toUpperCase() + item.slice(1)}
-                            </option>
-                        ))
-                    }
-                </select>
-            </form>
-            <button
-                className='start-btn'
-                onClick={start}
-            >
-                Start Playing
-            </button>
-        </section>
-    );
-
     return (
         <React.Fragment>
             <Header />
             <main id='main' className='page-main'>
                 <div className='home'>
-                    {!mainConfig.status && HomePage}
+                    <StartGame
+                        init={start}
+                        mainState={mainConfig}
+                        utility={{selectCategory, selectDifficulty}}
+                    />
                     <Quiz
                         status={mainConfig.status}
                         settings={settingCall()}
