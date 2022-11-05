@@ -51,19 +51,19 @@ const Quiz = ({ status, restart, settings }) => {
             }));
         }
 
-        const getData = async () => {
+        const getQuestions = async () => {
             try {
                 // console.log('API Call fired')
                 const response = await fetch(`https://opentdb.com/api.php?amount=5${settings}&encode=url3986`);
                 const data = await response.json();
                 questState(data.results);
             } catch(err) {
-                console.log(err);
+                console.error(err);
             }
         }
 
         if (['start', 'play again'].includes(config.finish) && status) {
-            getData();
+            getQuestions();
         }
     }, [config.finish, settings, status]);
 
