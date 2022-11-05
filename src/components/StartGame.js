@@ -1,4 +1,4 @@
-import './components/Styling/index.css';
+import './Styling/index.css';
 
 
 const StartGame = ({ mainState, utility, init }) => {
@@ -10,7 +10,7 @@ const StartGame = ({ mainState, utility, init }) => {
         return id === 'select-category' ? selectCategory(e) : selectDifficulty(e);
     }
 
-    return(
+    return (
         !status && <section id='welcome-section' className='home-sec'>
             <p>Let's Play a really cool Trivia Quiz?!</p>
             <p>But first...</p>
