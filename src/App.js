@@ -1,6 +1,7 @@
 import React from 'react';
 import Quiz from './components/Quiz';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import StartGame from './components/StartGame';
 import './components/Styling/index.css';
 
@@ -61,7 +62,9 @@ const App = () => {
                         restart={start}
                     />
                 </div>
+                <p className='credit'>by jvitoralb</p>
             </main>
+            <Footer />
         </React.Fragment>
     );
 };
