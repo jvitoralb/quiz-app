@@ -74,6 +74,12 @@
     background-color: rgba(0, 194, 87, 0.1);
 }
 
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .show-answer-btn {
     color: rgb(66, 66, 66);
     margin: 8px;
@@ -87,14 +93,8 @@
 
 .exit-btn {
     margin: 8px;
-    padding: 4px;
-    font-size: 12px;
+    padding: 3px 3px 0;
     border-radius: 3px;
-    color: rgb(87, 87, 87);
-}
-
-.exit-btn:hover {
-    color: black;
 }
 
 .select-warning {

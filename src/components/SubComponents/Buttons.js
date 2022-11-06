@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoExitOutline } from 'react-icons/io5'
 
 
 const Buttons = (props) => {
@@ -54,7 +55,7 @@ const Buttons = (props) => {
             </button>
         </div>
         :
-        ['playing', 'end game'].includes(finish) && <React.Fragment>
+        ['playing', 'end game'].includes(finish) && <div className='btn-wrapper'>
             <button
                 className='show-answer-btn'
                 onClick={buttonDisplay[toRenderRef.resolve](true)}
@@ -65,9 +66,9 @@ const Buttons = (props) => {
                 className='exit-btn'
                 onClick={quitGame}
             >
-                Quit
+                <IoExitOutline />
             </button>
-        </React.Fragment>
+        </div>
     );
 }
 
