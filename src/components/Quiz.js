@@ -1,10 +1,10 @@
 import React from 'react';
 import Options from './SubComponents/Options';
 import Questions from './SubComponents/Questions';
+import Waiting from './SubComponents/Waiting';
 import Buttons from './SubComponents/Buttons';
 import Score from './SubComponents/Score';
 import EndGame from './EndGame';
-import Waiting from './Waiting';
 import './Styling/styling.css';
 
 

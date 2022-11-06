@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoadingScore } from '../Waiting';
+import { LoadingScore } from './Waiting';
 
 
 const Score = ({ toRender, toRenderRef, resQuestions, finish }) => {
