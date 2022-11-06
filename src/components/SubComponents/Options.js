@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Options = ({ toRender, toRenderRef, select, forceAnswer, finish }) => {
+const Options = ({ toRender, toRenderRef, select, forceAswr, finish }) => {
 
     const getClass = (aswr) => {
 
@@ -20,7 +20,7 @@ const Options = ({ toRender, toRenderRef, select, forceAnswer, finish }) => {
         return '';
     }
 
-    const canSelect = (toRenderRef.resolve === 'initial' && !forceAnswer);
+    const canSelect = (toRenderRef.resolve === 'initial' && !forceAswr);
 
     return (
         <ul className='list-options'>
